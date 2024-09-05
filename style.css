@@ -19,12 +19,24 @@ body{
     padding-top: 10px;
     padding-right: 50px;
 }
-
+.aboutme{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.projects{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.portrait{
+    position: relative;
+    width: 75%;
+    margin: auto;
+    overflow: hidden;
+}
 .row{
     padding-top: 25px;
     display: flex;
 }
-
 .column {
     flex: 50%;
 }
@@ -41,4 +53,12 @@ body{
 }
 img.displaySlide{
     display: block;
+}
+.ecs{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.bottom{
+    text-align: center;
+    
 }
