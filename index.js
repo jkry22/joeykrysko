@@ -1,42 +1,55 @@
-const slides = document.querySelectorAll(".slides img")
-let slideIndex = 0;
-let intervalId = null;
-
-document.addEventListener("DOMContentLoaded", initializeSlider);
-
-initializeSlider();
-
-function initializeSlider(){
-
-    if(slides.length > 0){
-        slides[slideIndex].classList.add("displaySlide");
-        intervalId = setInterval(nextSlide, 5000);
+class Slideshow {
+    constructor(sliderElem) {
+        this.slides = sliderElem.querySelectorAll('.slides img');
+        this.slideIndex = 0;
+        this.intervalId = null;
+        this.prevBtn = sliderElem.querySelector('.prev');
+        this.nextBtn = sliderElem.querySelector('.next');
+        this.showSlide(this.slideIndex);
+        this.startAutoCycle();
+        this.attachEvents();
     }
 
+    showSlide(index) {
+        if (index >= this.slides.length) {
+            this.slideIndex = 0;
+        } else if (index < 0) {
+            this.slideIndex = this.slides.length - 1;
+        } else {
+            this.slideIndex = index;
+        }
+        this.slides.forEach(slide => {
+            slide.classList.remove('displaySlide');
+        });
+        if (this.slides[this.slideIndex]) {
+            this.slides[this.slideIndex].classList.add('displaySlide');
+        }
+    }
 
+    nextSlide = () => {
+        this.showSlide(this.slideIndex + 1);
+    }
+
+    prevSlide = () => {
+        this.showSlide(this.slideIndex - 1);
+    }
+
+    startAutoCycle() {
+        this.intervalId = setInterval(this.nextSlide, 5000);
+    }
+
+    attachEvents() {
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', this.prevSlide);
+        }
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', this.nextSlide);
+        }
+    }
 }
 
-
-function showSlide(index) {
-
-    if (index >= slides.length) {
-        slideIndex = 0;
-    } else if (index < 0) {
-        slideIndex = slides.length - 1;
-    }
-
-    slides.forEach(slide => {
-        slide.classList.remove("displaySlide");
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.slider').forEach(sliderElem => {
+        new Slideshow(sliderElem);
     });
-
-    slides[slideIndex].classList.add("displaySlide");
-}
-function prevSlide(){
-    slideIndex--;
-    showSlide(slideIndex);
-
-}
-function nextSlide(){
-    slideIndex++;
-    showSlide(slideIndex);
-}
+});
